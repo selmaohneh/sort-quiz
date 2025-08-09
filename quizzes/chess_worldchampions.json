@@ -1,0 +1,27 @@
+{
+  "title": "Chess World Champions",
+  "lowerLabel": "Earliest",
+  "upperLabel": "Most recent",
+  "_hint": "List at least 2 items from lowerLabel → upperLabel. Max 20 items.",
+  "items": [
+    "Wilhelm Steinitz",
+    "Emanuel Lasker",
+    "José Raúl Capablanca",
+    "Alexander Alekhine",
+    "Max Euwe",
+    "Mikhail Botvinnik",
+    "Vasily Smyslov",
+    "Mikhail Tal",
+    "Tigran Petrosian",
+    "Boris Spassky",
+    "Bobby Fischer",
+    "Anatoly Karpov",
+    "Garry Kasparov",
+    "Vladimir Kramnik",
+    "Viswanathan Anand",
+    "Magnus Carlsen",
+    "Ding Liren",
+    "Gukesh Dommaraju"
+  ]
+}
+

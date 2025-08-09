@@ -1,0 +1,20 @@
+{
+  "title": "Countries with Most Olympic Gold Medals",
+  "lowerLabel": "Fewer Gold Medals",
+  "upperLabel": "Most Gold Medals",
+  "_hint": "List at least 2 items from lowerLabel → upperLabel. Max 20 items.",
+  "items": [
+    "Hungary",
+    "Netherlands",
+    "Japan",
+    "China",
+    "France",
+    "Germany",
+    "Italy",
+    "Sweden",
+    "Russia",
+    "Great Britain",
+    "United States"
+  ]
+}
+

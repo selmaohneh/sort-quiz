@@ -1,0 +1,19 @@
+{
+  "title": "Country populations",
+  "lowerLabel": "Small",
+  "upperLabel": "Big",
+  "_hint": "List at least 2 items from lowerLabel → upperLabel. Max 20 items.",
+  "items": [
+    "Bangladesh",
+    "Brazil",
+    "Ethiopia",
+    "DR Congo",
+    "Nigeria",
+    "Pakistan",
+    "Indonesia",
+    "United States",
+    "China",
+    "India"
+  ]
+}
+
