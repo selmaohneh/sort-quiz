@@ -101,6 +101,27 @@
         </div>
       </dialog>
 
+      <script>
+        // Embedded manifest and quizzes to allow offline (file://) carousel
+        window.EMBEDDED_MANIFEST = [
+          { "path": "quizzes/earnings_movies.json", "title": "Movie Box Office (Top Earnings)" },
+          { "path": "quizzes/selled_music_albums.json", "title": "Best-Selling Music Albums" },
+          { "path": "quizzes/bundesliga2024.json", "title": "Bundesliga 2024" },
+          { "path": "quizzes/countries_goldmedals.json", "title": "Olympic Gold Medals by Country" },
+          { "path": "quizzes/chess_worldchampions.json", "title": "Chess World Champions" },
+          { "path": "quizzes/history_events.json", "title": "World History Events" },
+          { "path": "quizzes/country_populations.json", "title": "Country Populations" }
+        ];
+        window.EMBEDDED_QUIZZES = {
+          "quizzes/earnings_movies.json": {"title":"Highest-Grossing Movies","lowerLabel":"Lower Earnings","upperLabel":"Highest Earnings","_hint":"List at least 2 items from lowerLabel → upperLabel. Max 20 items.","items":["The Lion King (2019)","Jurassic World","Spider-Man: No Way Home","Avengers: Infinity War","Star Wars: The Force Awakens","Titanic","Avatar: The Way of Water","Avengers: Endgame","Avatar"]},
+          "quizzes/selled_music_albums.json": {"title":"Best Selling Music Albums","lowerLabel":"Fewer Sales","upperLabel":"Most Sales","_hint":"List at least 2 items from lowerLabel → upperLabel. Max 20 items.","items":["Come On Over - Shania Twain","Rumours - Fleetwood Mac","Saturday Night Fever - Bee Gees","Their Greatest Hits - Eagles","Back in Black - AC/DC","The Dark Side of the Moon - Pink Floyd","The Bodyguard (Soundtrack) - Whitney Houston","Thriller - Michael Jackson"]},
+          "quizzes/bundesliga2024.json": {"title":"Bundesliga 2023/24 Rankings","lowerLabel":"Lower Rank","upperLabel":"Champion","_hint":"List at least 2 items from lowerLabel → upperLabel. Max 20 items.","items":["VfL Bochum","Holstein Kiel","1. FC Heidenheim","TSG 1899 Hoffenheim","FC St. Pauli","1. FC Union Berlin","FC Augsburg","VfL Wolfsburg","Borussia Mönchengladbach","VfB Stuttgart","Werder Bremen","RB Leipzig","1. FSV Mainz 05","SC Freiburg","Borussia Dortmund","Eintracht Frankfurt","Bayer 04 Leverkusen","FC Bayern München"]},
+          "quizzes/countries_goldmedals.json": {"title":"Countries with Most Olympic Gold Medals","lowerLabel":"Fewer Gold Medals","upperLabel":"Most Gold Medals","_hint":"List at least 2 items from lowerLabel → upperLabel. Max 20 items.","items":["Hungary","Netherlands","Japan","China","France","Germany","Italy","Sweden","Russia","Great Britain","United States"]},
+          "quizzes/chess_worldchampions.json": {"title":"Chess World Champions","lowerLabel":"Earliest","upperLabel":"Most recent","_hint":"List at least 2 items from lowerLabel → upperLabel. Max 20 items.","items":["Wilhelm Steinitz","Emanuel Lasker","José Raúl Capablanca","Alexander Alekhine","Max Euwe","Mikhail Botvinnik","Vasily Smyslov","Mikhail Tal","Tigran Petrosian","Boris Spassky","Bobby Fischer","Anatoly Karpov","Garry Kasparov","Vladimir Kramnik","Viswanathan Anand","Magnus Carlsen","Ding Liren","Gukesh Dommaraju"]},
+          "quizzes/history_events.json": {"title":"Famous history events","lowerLabel":"Early","upperLabel":"Modern","_hint":"List at least 2 items from lowerLabel → upperLabel. Max 20 items.","items":["Birth of major civilizations","Ancient Egypt builds pyramids","Code of Hammurabi created","Roman Empire rises","Spread of Christianity","Islam founded","Mongol Empire expands","Black Death in Europe","Renaissance begins","Columbus discovers America","Protestant Reformation","Industrial Revolution","American Revolution","French Revolution","World War I","Russian Revolution","World War II","United Nations founded","Moon landing","Internet age begins"]},
+          "quizzes/country_populations.json": {"title":"Country populations","lowerLabel":"Small","upperLabel":"Big","_hint":"List at least 2 items from lowerLabel → upperLabel. Max 20 items.","items":["Bangladesh","Brazil","Ethiopia","DR Congo","Nigeria","Pakistan","Indonesia","United States","China","India"]}
+        };
+      </script>
       <script src="./app.js"></script>
     </div>
   </body>

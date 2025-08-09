@@ -17,6 +17,7 @@
     errorMessage: document.getElementById('errorMessage'),
     closeErrorBtn: document.getElementById('closeErrorBtn'),
     carouselTrack: document.getElementById('carouselTrack'),
+    carouselPanel: document.getElementById('carouselPanel'),
   };
 
   const MAX_ITEMS = 20;
@@ -104,16 +105,18 @@
     if (els.gameGrid) els.gameGrid.classList.remove('finished');
   }
 
-  function toLanding() { state.gameOver = false; els.game.classList.add('hidden'); els.landing.classList.remove('hidden'); }
-  function toGame() { els.landing.classList.add('hidden'); els.game.classList.remove('hidden'); }
+  function toLanding() { state.gameOver = false; els.game.classList.add('hidden'); els.landing.classList.remove('hidden'); if (els.carouselPanel) els.carouselPanel.classList.remove('hidden'); }
+  function toGame() { els.landing.classList.add('hidden'); els.game.classList.remove('hidden'); if (els.carouselPanel) els.carouselPanel.classList.add('hidden'); }
 
   async function fetchQuizList() {
-    // Expect a manifest listing quizzes (must exist for static hosting). If missing, fallback to nothing.
+    // Prefer embedded list when running from file://
+    if (Array.isArray(window.EMBEDDED_MANIFEST) && window.EMBEDDED_MANIFEST.length) {
+      return window.EMBEDDED_MANIFEST.slice();
+    }
     try {
       const res = await fetch('./quizzes/manifest.json', { cache: 'no-store' });
       if (!res.ok) return [];
       const list = await res.json();
-      // list: [{ path: 'quizzes/chess.json', title: 'Chess World Champions' }, ...]
       return Array.isArray(list) ? list : [];
     } catch { return []; }
   }
@@ -132,6 +135,8 @@
       const card = $('div', { className: 'carousel-card-item', text: q.title });
       card.addEventListener('click', async () => {
         try {
+          const embedded = window.EMBEDDED_QUIZZES && window.EMBEDDED_QUIZZES[q.path];
+          if (embedded) { startGameFromData(embedded); return; }
           const res = await fetch(`./${q.path}`, { cache: 'no-store' });
           const data = await res.json();
           startGameFromData(data);
