@@ -66,6 +66,8 @@ body {
 .btn:hover { filter: brightness(1.05); }
 
 main { flex: 1; padding: 20px; display: grid; place-items: center; row-gap: 0; }
+
+
 .panel { width: min(1100px, 96vw); margin: 0 auto; }
 .panel + .panel { margin-top: 0; }
 .hidden { display: none; }
@@ -264,7 +266,7 @@ body.win .timeline-card, body.lose .timeline-card { padding: 12px; }
 /* Carousel */
 .carousel-card { background: var(--panel); border: 1px solid #242a54; border-radius: 18px; padding: 16px; box-shadow: var(--shadow); margin-bottom: 0; }
 .carousel-header { color: var(--text); font-weight: 800; margin-bottom: 10px; font-family: 'League Spartan', sans-serif; font-size: 1.6rem; letter-spacing: 0.4px; }
-.carousel-viewport { overflow: hidden; padding: 0 12px; mask-image: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%); }
+.carousel-viewport { overflow: hidden; padding: 0 16px; mask-image: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%); }
 .carousel-track { display: flex; gap: 12px; will-change: transform; }
 .carousel-card-item { flex: 0 0 auto; background: linear-gradient(180deg, #1c214a, #141a3c); border: 1px solid #2b3270; border-radius: 14px; padding: 10px 14px; color: #e8ecff; min-width: 220px; text-align: center; cursor: pointer; transition: transform 120ms ease, box-shadow 200ms ease; }
 .carousel-card-item:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.25); }
@@ -277,6 +279,10 @@ body.win .timeline-card, body.lose .timeline-card { padding: 12px; }
 }
 @media (max-width: 800px) {
   .slot-number { font-size: 22px; }
+}
+@media (max-width: 640px) {
+  .hero, .carousel-card { margin-left: 18px; margin-right: 18px; }
+  .tray-card, .timeline-card { margin-left: 18px; margin-right: 18px; }
 } 
 
 /* Header icon button */
