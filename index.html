@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Timeline Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;600;800&family=Nunito:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="app-header">
+        <div class="brand">
+          <div class="logo">⚡</div>
+          <div class="titles">
+            <h1>Timeline Quiz</h1>
+          </div>
+        </div>
+        <div class="controls">
+          <button id="newGameBtn" class="btn ghost" title="Back to start">New Game</button>
+        </div>
+      </header>
+
+      <main>
+        <input id="fileInput" type="file" accept="application/json" hidden />
+        
+        <section id="landing" class="panel">
+          <div class="hero">
+            <h2>Make your own timeline quiz</h2>
+            <p class="lead">Bring your own data and play right away. Download the template, fill it with your items in order, then upload to start a new game.</p>
+            <div class="cta-row">
+              <button id="downloadTemplateBtn2" class="btn secondary">Download Template</button>
+              <label for="fileInput" class="btn primary">Upload and Start Quiz</label>
+            </div>
+            <details class="hint within-step">
+              <summary>Template example</summary>
+              <pre class="code-sample">{
+  "title": "Animal sizes",
+  "lowerLabel": "Small",
+  "upperLabel": "Big",
+  "_hint": "List items from lowerLabel → upperLabel (Small → Big). Max 20 items.",
+  "items": [
+    "Ant",
+    "Spider",
+    "Mouse",
+    "Raven",
+    "Cat",
+    "Dog",
+    "Elephant"
+  ]
+}</pre>
+            </details>
+          </div>
+        </section>
+
+        <section id="game" class="panel hidden">
+          <div class="game-header center">
+            <h2 id="gameTitle">Title</h2>
+          </div>
+
+          <div class="game-grid">
+            <div class="left-column">
+              <div class="tray-card">
+                <div class="tray-title">Remaining Items</div>
+                <div class="tray" id="tray"></div>
+                <div class="hint-row" id="hintRow"></div>
+              </div>
+            </div>
+
+            <div class="right-column">
+              <div class="timeline-card">
+                <div class="timeline-label" id="upperLabel">Upper</div>
+                <div class="timeline" id="timeline"></div>
+                <div class="timeline-label" id="lowerLabel">Lower</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <dialog id="errorModal" class="modal">
+        <div class="modal-content">
+          <h3>Invalid File</h3>
+          <p id="errorMessage">The uploaded file format is invalid.</p>
+          <div class="modal-actions">
+            <button id="closeErrorBtn" class="btn primary">Close</button>
+          </div>
+        </div>
+      </dialog>
+
+      <script src="./app.js"></script>
+    </div>
+  </body>
+</html> 
