@@ -52,7 +52,6 @@
 
   function downsampleKeepOrder(array, max) {
     if (array.length <= max) return array.slice();
-    // Pick indices uniformly at random without replacement, then sort to keep order
     const indices = Array.from({ length: array.length }, (_, i) => i);
     shuffle(indices);
     const chosen = indices.slice(0, max).sort((a, b) => a - b);
@@ -60,13 +59,12 @@
   }
 
   function cacheGameGrid() {
-    if (!els.gameGrid) {
-      els.gameGrid = document.querySelector('.game-grid');
-    }
+    if (!els.gameGrid) els.gameGrid = document.querySelector('.game-grid');
   }
 
   function resetUI() {
     els.timeline.innerHTML = '';
+    els.timeline.classList.remove('reveal-mode');
     els.tray.innerHTML = '';
     els.hintRow.textContent = '';
     document.body.classList.remove('win', 'lose');
@@ -109,13 +107,12 @@
       title: 'Animal sizes',
       lowerLabel: 'Small',
       upperLabel: 'Big',
-      _hint: 'List items from lowerLabel → upperLabel (Small → Big). Max 20 items.',
+      _hint: 'List at least 2 items from lowerLabel → upperLabel (Small → Big). Max 20 items.',
       items: ['Ant','Spider','Mouse','Raven','Cat','Dog','Elephant']
     };
   }
 
   function setHint(msg) { els.hintRow.textContent = msg; }
-
   function showError(message) {
     if (!els.errorModal) { alert(message); return; }
     els.errorMessage.textContent = message;
@@ -123,22 +120,22 @@
   }
 
   function startGameFromData(data) {
-    if (!data || typeof data !== 'object' || !Array.isArray(data.items)) {
-      showError('Missing required fields: title, lowerLabel, upperLabel, items[].');
+    if (!data || typeof data !== 'object') {
+      showError('Invalid file format.');
       return;
     }
-    if (data.items.length < 3) {
-      showError('Provide at least 3 items.');
-      return;
-    }
+    const { title, lowerLabel, upperLabel, items } = data;
+    if (!Array.isArray(items)) { showError('Missing items list.'); return; }
+    if (typeof lowerLabel !== 'string' || typeof upperLabel !== 'string') { showError('Missing lowerLabel or upperLabel.'); return; }
+    if (typeof title !== 'string' || title.trim() === '') { showError('Missing title.'); return; }
+    if (items.length < 2) { showError('Provide at least 2 items.'); return; }
 
-    state.title = data.title || 'Timeline Quiz';
-    state.lowerLabel = data.lowerLabel || 'Lower';
-    state.upperLabel = data.upperLabel || 'Upper';
+    state.title = title || 'Sort Quiz';
+    state.lowerLabel = lowerLabel || 'Lower';
+    state.upperLabel = upperLabel || 'Upper';
 
-    // Enforce max items by random downsampling while keeping order
-    const items = downsampleKeepOrder(data.items, MAX_ITEMS);
-    state.orderedItems = items;
+    const limited = downsampleKeepOrder(items, MAX_ITEMS);
+    state.orderedItems = limited;
 
     state.availableItems = Array.from({ length: state.orderedItems.length }, (_, i) => i);
 
@@ -188,10 +185,7 @@
     const badge = $('div', { className: 'slot-number', text: String(numberLabel) });
     slot.appendChild(badge);
 
-    slot.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      slot.classList.add('active');
-    });
+    slot.addEventListener('dragover', (e) => { e.preventDefault(); slot.classList.add('active'); });
     slot.addEventListener('dragleave', () => slot.classList.remove('active'));
     slot.addEventListener('drop', (e) => {
       e.preventDefault();
@@ -201,9 +195,7 @@
     });
 
     slot.addEventListener('click', () => {
-      if (state.selectedItemIndex != null) {
-        tryPlaceItemAtSlot(state.selectedItemIndex, slotIndex);
-      }
+      if (state.selectedItemIndex != null) tryPlaceItemAtSlot(state.selectedItemIndex, slotIndex);
     });
 
     els.timeline.appendChild(slot);
@@ -218,29 +210,17 @@
 
   function renderItemChip(itemIndex) {
     const chip = $('div', { className: 'item-chip', text: state.orderedItems[itemIndex], attrs: { draggable: 'true', 'data-item-index': String(itemIndex), tabindex: '0' } });
-
-    chip.addEventListener('dragstart', (e) => {
-      e.dataTransfer.setData('text/item-index', String(itemIndex));
-      chip.classList.add('selected');
-    });
+    chip.addEventListener('dragstart', (e) => { e.dataTransfer.setData('text/item-index', String(itemIndex)); chip.classList.add('selected'); });
     chip.addEventListener('dragend', () => chip.classList.remove('selected'));
-
     chip.addEventListener('click', () => {
       const wasSelected = state.selectedItemIndex === itemIndex;
       clearSelections();
-      if (!wasSelected) {
-        state.selectedItemIndex = itemIndex;
-        chip.classList.add('selected');
-      }
+      if (!wasSelected) { state.selectedItemIndex = itemIndex; chip.classList.add('selected'); }
     });
-
     chip.addEventListener('keydown', (e) => {
       const num = Number(e.key);
-      if (!Number.isNaN(num) && num >= 1 && num <= state.slots.length) {
-        tryPlaceItemAtSlot(itemIndex, num - 1);
-      }
+      if (!Number.isNaN(num) && num >= 1 && num <= state.slots.length) tryPlaceItemAtSlot(itemIndex, num - 1);
     });
-
     return chip;
   }
 
@@ -252,20 +232,14 @@
   function isCorrectPlacement(itemIndex, slotIndex) {
     const leftNeighbor = state.placed[slotIndex - 1];
     const rightNeighbor = state.placed[slotIndex];
-    const leftOk = leftNeighbor === undefined || leftNeighbor < itemIndex;
-    const rightOk = rightNeighbor === undefined || itemIndex < rightNeighbor;
-    return leftOk && rightOk;
+    return (leftNeighbor === undefined || leftNeighbor < itemIndex) && (rightNeighbor === undefined || itemIndex < rightNeighbor);
   }
 
   function tryPlaceItemAtSlot(itemIndex, slotIndex) {
     if (state.gameOver) return;
-    if (!state.availableItems.includes(itemIndex)) {
-      setHint('That item was already placed.');
-      return;
-    }
+    if (!state.availableItems.includes(itemIndex)) { setHint('That item was already placed.'); return; }
 
     const correct = isCorrectPlacement(itemIndex, slotIndex);
-
     if (!correct) {
       state.gameOver = true;
       document.body.classList.add('lose');
@@ -276,9 +250,7 @@
 
     state.placed.splice(slotIndex, 0, itemIndex);
     state.availableItems = state.availableItems.filter((i) => i !== itemIndex);
-
     clearSelections();
-
     renderGame();
 
     if (state.availableItems.length === 0) {
@@ -286,17 +258,14 @@
       document.body.classList.add('win');
       centerFinalTimeline();
       revealCorrectOrder();
-      return;
     }
   }
 
-  function centerFinalTimeline() {
-    cacheGameGrid();
-    if (els.gameGrid) els.gameGrid.classList.add('finished');
-  }
+  function centerFinalTimeline() { cacheGameGrid(); if (els.gameGrid) els.gameGrid.classList.add('finished'); }
 
   function revealCorrectOrder() {
     els.timeline.innerHTML = '';
+    els.timeline.classList.add('reveal-mode');
     const total = state.orderedItems.length;
     const isWin = document.body.classList.contains('win');
     const chipClass = isWin ? 'item-chip win' : 'item-chip lose';
@@ -310,7 +279,6 @@
     setTimeout(() => setHint('Correct order revealed!'), 200);
   }
 
-  // Wire controls
   els.fileInput.addEventListener('change', async (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
@@ -346,9 +314,7 @@
   document.addEventListener('keydown', (e) => {
     if (state.selectedItemIndex == null) return;
     const num = Number(e.key);
-    if (!Number.isNaN(num) && num >= 1 && num <= state.slots.length) {
-      tryPlaceItemAtSlot(state.selectedItemIndex, num - 1);
-    }
+    if (!Number.isNaN(num) && num >= 1 && num <= state.slots.length) tryPlaceItemAtSlot(state.selectedItemIndex, num - 1);
   });
 
   toLanding();

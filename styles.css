@@ -128,7 +128,14 @@ main { flex: 1; padding: 20px; display: grid; place-items: center; }
   gap: 8px;
   align-items: stretch;
   overflow: hidden;
+  padding-bottom: 8px;
 }
+/* Denser layout on final reveal so many items fit cleanly */
+.timeline.reveal-mode { gap: 6px; }
+.timeline.reveal-mode .slot { border: 0; outline: 1px solid #3b4386; border-radius: 10px; }
+body.win .timeline.reveal-mode .slot { outline-color: #2ea862; background: rgba(37, 155, 82, 0.08); }
+body.lose .timeline.reveal-mode .slot { outline-color: #c84343; background: rgba(176, 46, 46, 0.08); }
+.timeline.reveal-mode .item-chip { padding: 4px 8px; font-size: 0.8rem; }
 
 .slot {
   min-width: auto;
@@ -152,6 +159,7 @@ main { flex: 1; padding: 20px; display: grid; place-items: center; }
 }
 .slot.active { background: var(--slot-active); border-style: solid; color: #cfd6ff; }
 .slot.filled { border-style: solid; border-color: #4a54a8; background: linear-gradient(180deg, #1a1f44, #182051); }
+.slot.filled .item-chip { width: 100%; }
 
 .item-chip {
   background: linear-gradient(180deg, #1c214a, #141a3c);
@@ -210,6 +218,7 @@ main { flex: 1; padding: 20px; display: grid; place-items: center; }
 .modal { border: none; border-radius: 16px; padding: 0; box-shadow: var(--shadow); max-width: 560px; width: calc(100% - 32px); }
 .modal::backdrop { background: rgba(2, 4, 14, 0.6); backdrop-filter: blur(2px); }
 .modal-content { padding: 18px; background: var(--panel); border: 1px solid #242a54; border-radius: 16px; }
+.modal-content, .modal-content h3, .modal-content p { color: var(--text); }
 .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px; }
 
 footer { text-align: center; color: var(--muted); padding: 24px 0 40px; }
@@ -243,6 +252,9 @@ body.lose .btn.ghost#newGameBtn { border-color: #b02e2e; color: #ffb3b3; }
 
 /* Reveal animation removed */
 .placed-reveal { animation: none; }
+
+/* Tighten outer padding on result to gain a bit more vertical space */
+body.win .timeline-card, body.lose .timeline-card { padding: 12px; }
 
 /* Responsive */
 @media (max-width: 1000px) {
