@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;600;800&family=Nunito:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5845633849679297"
-     crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>    
   </head>
   <body>
     <div id="app">
@@ -33,20 +33,9 @@
       <main>
         <input id="fileInput" type="file" accept="application/json" hidden />
 
-        <!-- Carousel of ready-made quizzes -->
-        <section class="panel" id="carouselPanel">
-          <div class="carousel-card" id="carouselCard">
-            <div class="carousel-header">Ready‑made quizzes</div>
-            <div class="carousel-viewport">
-              <div class="carousel-track" id="carouselTrack"></div>
-            </div>
-            <div class="carousel-hint">Click a card to start</div>
-          </div>
-        </section>
-        
         <section id="landing" class="panel">
           <div class="hero">
-            <h2>Make your own sort quiz</h2>
+            <h2>Create a sort game for your next pub quiz. Who's the first to guess wrong?</h2>
             <p class="lead">Bring your own data and play right away. Download the template, fill it with your items in order, then upload to start a new game.</p>
             <div class="cta-row">
               <button id="downloadTemplateBtn2" class="btn secondary">Download Template</button>
@@ -71,8 +60,19 @@
 }</pre>
             </details>
           </div>
-        </section>
+                </section>
 
+        <!-- Community quizzes -->
+        <section class="panel" id="carouselPanel">
+          <div class="carousel-card" id="carouselCard">
+            <div class="carousel-header">Community quizzes</div>
+            <div class="carousel-viewport">
+              <div class="carousel-track" id="carouselTrack"></div>
+            </div>
+            <div class="carousel-hint">Click a card to start</div>
+          </div>
+        </section>
+        
         <section id="game" class="panel hidden">
           <div class="game-header center">
             <h2 id="gameTitle">Title</h2>
