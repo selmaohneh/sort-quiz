@@ -1,0 +1,9 @@
+[
+  { "path": "quizzes/earnings_movies.json", "title": "Movie Box Office (Top Earnings)" },
+  { "path": "quizzes/selled_music_albums.json", "title": "Best-Selling Music Albums" },
+  { "path": "quizzes/bundesliga2024.json", "title": "Bundesliga 2024" },
+  { "path": "quizzes/countries_goldmedals.json", "title": "Olympic Gold Medals by Country" },
+  { "path": "quizzes/chess_worldchampions.json", "title": "Chess World Champions" },
+  { "path": "quizzes/history_events.json", "title": "World History Events" },
+  { "path": "quizzes/country_populations.json", "title": "Country Populations" }
+] 

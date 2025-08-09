@@ -256,6 +256,15 @@ body.lose .btn.ghost#newGameBtn { border-color: #b02e2e; color: #ffb3b3; }
 /* Tighten outer padding on result to gain a bit more vertical space */
 body.win .timeline-card, body.lose .timeline-card { padding: 12px; }
 
+/* Carousel */
+.carousel-card { background: var(--panel); border: 1px solid #242a54; border-radius: 18px; padding: 16px; box-shadow: var(--shadow); margin-bottom: 18px; }
+.carousel-header { color: var(--muted); font-weight: 800; margin-bottom: 10px; }
+.carousel-viewport { overflow: hidden; mask-image: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%); }
+.carousel-track { display: flex; gap: 12px; will-change: transform; }
+.carousel-card-item { flex: 0 0 auto; background: linear-gradient(180deg, #1c214a, #141a3c); border: 1px solid #2b3270; border-radius: 14px; padding: 10px 14px; color: #e8ecff; min-width: 220px; text-align: center; cursor: pointer; transition: transform 120ms ease, box-shadow 200ms ease; }
+.carousel-card-item:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.25); }
+.carousel-hint { color: var(--muted); margin-top: 8px; font-size: 0.9rem; }
+
 /* Responsive */
 @media (max-width: 1000px) {
   .game-grid { grid-template-columns: 1fr; }

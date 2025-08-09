@@ -25,6 +25,17 @@
 
       <main>
         <input id="fileInput" type="file" accept="application/json" hidden />
+
+        <!-- Carousel of ready-made quizzes -->
+        <section class="panel" id="carouselPanel">
+          <div class="carousel-card" id="carouselCard">
+            <div class="carousel-header">Ready‑made quizzes</div>
+            <div class="carousel-viewport">
+              <div class="carousel-track" id="carouselTrack"></div>
+            </div>
+            <div class="carousel-hint">Click a card to start</div>
+          </div>
+        </section>
         
         <section id="landing" class="panel">
           <div class="hero">
@@ -40,7 +51,7 @@
   "title": "Animal sizes",
   "lowerLabel": "Small",
   "upperLabel": "Big",
-  "_hint": "List at least 2 items from lowerLabel → upperLabel. Max 20 items.",
+  "_hint": "List at least 2 items from lowerLabel → upperLabel (Small → Big). Max 20 items.",
   "items": [
     "Ant",
     "Spider",
