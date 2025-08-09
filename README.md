@@ -1,6 +1,6 @@
 ## Sort Quiz
 
-A single-page, offline-friendly pub quiz inspired by the "Sortieren" game from Schlag den Raab. Place items into a vertical timeline in the correct order. A wrong placement ends the game.
+A single-page, offline-friendly pub quiz inspired by the "Sortieren" game from german tv show "Schlag den Raab". Place items into a vertical timeline in the correct order. A wrong placement ends the game.
 
 ### Play online
 - Live site: [sort-quiz.com](https://www.sort-quiz.com/)
