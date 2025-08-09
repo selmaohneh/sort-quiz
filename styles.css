@@ -135,10 +135,10 @@ main { flex: 1; padding: 20px; display: grid; place-items: center; row-gap: 0; }
 }
 /* Denser layout on final reveal so many items fit cleanly */
 .timeline.reveal-mode { gap: 6px; }
-.timeline.reveal-mode .slot { border: 0; outline: 1px solid #3b4386; border-radius: 10px; }
-body.win .timeline.reveal-mode .slot { outline-color: #2ea862; background: rgba(37, 155, 82, 0.08); }
-body.lose .timeline.reveal-mode .slot { outline-color: #c84343; background: rgba(176, 46, 46, 0.08); }
-.timeline.reveal-mode .item-chip { padding: 4px 8px; font-size: 0.8rem; }
+.timeline.reveal-mode .slot { border: 0; outline: none; border-radius: 10px; background: transparent; }
+.timeline.reveal-mode .item-chip { padding: 4px 8px; font-size: 0.8rem; border: 1px solid #3b4386; border-radius: 10px; background: rgba(28, 33, 74, 0.6); box-shadow: none; }
+body.win .timeline.reveal-mode .item-chip { border-color: #2ea862; background: rgba(37, 155, 82, 0.12); }
+body.lose .timeline.reveal-mode .item-chip { border-color: #c84343; background: rgba(176, 46, 46, 0.12); }
 
 .slot {
   min-width: auto;
