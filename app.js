@@ -136,10 +136,10 @@
       card.addEventListener('click', async () => {
         try {
           const embedded = window.EMBEDDED_QUIZZES && window.EMBEDDED_QUIZZES[q.path];
-          if (embedded) { startGameFromData(embedded); return; }
+          if (embedded) { const ok = startGameFromData(embedded); return; }
           const res = await fetch(`./${q.path}`, { cache: 'no-store' });
           const data = await res.json();
-          startGameFromData(data);
+          const ok = startGameFromData(data);
         } catch (e) {
           showError('Failed to load quiz.');
         }
@@ -209,12 +209,12 @@
   function showError(message) { if (!els.errorModal) { alert(message); return; } els.errorMessage.textContent = message; els.errorModal.showModal(); }
 
   function startGameFromData(data) {
-    if (!data || typeof data !== 'object') { showError('Invalid file format.'); return; }
+    if (!data || typeof data !== 'object') { showError('Invalid file format.'); return false; }
     const { title, lowerLabel, upperLabel, items } = data;
-    if (!Array.isArray(items)) { showError('Missing items list.'); return; }
-    if (typeof lowerLabel !== 'string' || typeof upperLabel !== 'string') { showError('Missing lowerLabel or upperLabel.'); return; }
-    if (typeof title !== 'string' || title.trim() === '') { showError('Missing title.'); return; }
-    if (items.length < 2) { showError('Provide at least 2 items.'); return; }
+    if (!Array.isArray(items)) { showError('Missing items list.'); return false; }
+    if (typeof lowerLabel !== 'string' || typeof upperLabel !== 'string') { showError('Missing lowerLabel or upperLabel.'); return false; }
+    if (typeof title !== 'string' || title.trim() === '') { showError('Missing title.'); return false; }
+    if (items.length < 2) { showError('Provide at least 2 items.'); return false; }
 
     state.title = title || 'Sort Quiz';
     state.lowerLabel = lowerLabel || 'Lower';
@@ -234,6 +234,7 @@
 
     renderGame();
     toGame();
+    return true;
   }
 
   function renderGame() {
@@ -285,7 +286,14 @@
     if (state.gameOver) return;
     if (!state.availableItems.includes(itemIndex)) { setHint('That item was already placed.'); return; }
     const correct = isCorrectPlacement(itemIndex, slotIndex);
-    if (!correct) { playErrorSound(); state.gameOver = true; document.body.classList.add('lose'); centerFinalTimeline(); revealCorrectOrder(); return; }
+    if (!correct) {
+      playErrorSound();
+      state.gameOver = true;
+      document.body.classList.add('lose');
+      centerFinalTimeline();
+      revealCorrectOrder();
+      return;
+    }
     state.placed.splice(slotIndex, 0, itemIndex); state.availableItems = state.availableItems.filter((i) => i !== itemIndex); playSuccessSound(); clearSelections(); renderGame();
     if (state.availableItems.length === 0) { state.gameOver = true; document.body.classList.add('win'); centerFinalTimeline(); revealCorrectOrder(); }
   }
@@ -294,7 +302,7 @@
 
   function revealCorrectOrder() { els.timeline.innerHTML = ''; els.timeline.classList.add('reveal-mode'); const total = state.orderedItems.length; const isWin = document.body.classList.contains('win'); const chipClass = isWin ? 'item-chip win' : 'item-chip lose'; for (let i = total - 1; i >= 0; i--) { const slot = $('div', { className: 'slot filled placed-reveal' }); const card = $('div', { className: chipClass, text: state.orderedItems[i] }); slot.appendChild(card); els.timeline.appendChild(slot); } els.tray.innerHTML = ''; setTimeout(() => setHint('Correct order revealed!'), 200); }
 
-  els.fileInput.addEventListener('change', async (e) => { const file = e.target.files && e.target.files[0]; if (!file) return; try { const text = await readFile(file); const data = JSON.parse(text); startGameFromData(data); } catch (err) { console.error(err); showError('Failed to read file. Ensure it is valid.'); } finally { e.target.value = ''; } });
+  els.fileInput.addEventListener('change', async (e) => { const file = e.target.files && e.target.files[0]; if (!file) return; try { const text = await readFile(file); const data = JSON.parse(text); const ok = startGameFromData(data); } catch (err) { console.error(err); showError('Failed to read file. Ensure it is valid.'); } finally { e.target.value = ''; } });
 
   function onDownloadTemplate() { const data = generateTemplate(); downloadText('my-animal-quiz.json', JSON.stringify(data, null, 2)); }
   if (els.downloadTemplateBtn) els.downloadTemplateBtn.addEventListener('click', onDownloadTemplate);
