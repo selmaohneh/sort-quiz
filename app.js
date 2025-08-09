@@ -33,6 +33,89 @@
     gameOver: false,
   };
 
+  // --- Audio ---
+  let audioCtx = null;
+  let masterGain = null;
+  function getAudioContext() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0.06;
+      masterGain.connect(audioCtx.destination);
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(() => {});
+    }
+    return audioCtx;
+  }
+  function playBeep(freq, durationMs, type = 'sine', startDelayMs = 0) {
+    const ctx = getAudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0, ctx.currentTime + startDelayMs / 1000);
+    gain.gain.linearRampToValueAtTime(1, ctx.currentTime + startDelayMs / 1000 + 0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + (startDelayMs + durationMs) / 1000);
+    osc.connect(gain).connect(masterGain);
+    osc.start(ctx.currentTime + startDelayMs / 1000);
+    osc.stop(ctx.currentTime + (startDelayMs + durationMs + 30) / 1000);
+  }
+  function playSuccessSound() {
+    playBeep(660, 160, 'sine', 0);
+    playBeep(880, 160, 'sine', 120);
+  }
+  function playErrorSound() {
+    // ~2s sad buzzer: detuned saws, descending sweep, lowpass closing, subtle sub
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+    const dur = 2.0;
+
+    // Master envelope for the buzzer
+    const buzzGain = ctx.createGain();
+    buzzGain.gain.setValueAtTime(0.001, now);
+    buzzGain.gain.linearRampToValueAtTime(0.5, now + 0.03);
+    buzzGain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+
+    // Lowpass filter sweep to make it feel like it closes/sighs
+    const lp = ctx.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.Q.value = 6;
+    lp.frequency.setValueAtTime(1600, now);
+    lp.frequency.exponentialRampToValueAtTime(300, now + dur * 0.9);
+
+    lp.connect(buzzGain).connect(masterGain);
+
+    const makeBuzz = (detune) => {
+      const osc = ctx.createOscillator();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(280, now);
+      osc.frequency.exponentialRampToValueAtTime(70, now + dur * 0.9);
+      osc.detune.value = detune; // cents
+      osc.connect(lp);
+      osc.start(now);
+      osc.stop(now + dur);
+    };
+
+    // Detuned stack for richness
+    makeBuzz(-14);
+    makeBuzz(0);
+    makeBuzz(14);
+
+    // Sub layer for sadness
+    const sub = ctx.createOscillator();
+    const subGain = ctx.createGain();
+    sub.type = 'triangle';
+    sub.frequency.setValueAtTime(90, now);
+    sub.frequency.exponentialRampToValueAtTime(55, now + dur * 0.9);
+    subGain.gain.setValueAtTime(0.0001, now);
+    subGain.gain.linearRampToValueAtTime(0.12, now + 0.04);
+    subGain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+    sub.connect(subGain).connect(buzzGain);
+    sub.start(now);
+    sub.stop(now + dur);
+  }
+
   function $(tag, opts = {}) {
     const e = document.createElement(tag);
     if (opts.className) e.className = opts.className;
@@ -241,6 +324,7 @@
 
     const correct = isCorrectPlacement(itemIndex, slotIndex);
     if (!correct) {
+      playErrorSound();
       state.gameOver = true;
       document.body.classList.add('lose');
       centerFinalTimeline();
@@ -250,6 +334,7 @@
 
     state.placed.splice(slotIndex, 0, itemIndex);
     state.availableItems = state.availableItems.filter((i) => i !== itemIndex);
+    playSuccessSound();
     clearSelections();
     renderGame();
 
