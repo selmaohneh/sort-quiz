@@ -1,4 +1,4 @@
 [
-  { "path": "quizzes/animal_long_jump.json", "title": "Animal Long Jump Distances" },
-  { "path": "quizzes/most_100_billboard_entries.json", "title": "Most Billboard Hot 100 Entries" }
+  { "path": "quizzes/stars-age-of-death.json", "title": "Age at Death of Famous Musicians" },
+  { "path": "quizzes/gaming-consoles-releases.json", "title": "Major Gaming Consoles Ordered by Release Year" }
 ] 
