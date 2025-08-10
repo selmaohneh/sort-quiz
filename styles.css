@@ -122,6 +122,20 @@ main { flex: 1; padding: 20px; display: grid; place-items: center; row-gap: 0; b
   flex-shrink: 0;
 }
 
+.play-hint {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(124, 140, 255, 0.08);
+  border: 1px solid #2c336d;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+.play-hint strong {
+  color: var(--text);
+}
+
 .create-step { 
   display: flex; 
   align-items: flex-start; 
