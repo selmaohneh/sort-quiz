@@ -1,0 +1,24 @@
+{
+  "title": "Major Gaming Consoles Ordered by Release Year",
+  "lowerLabel": "Oldest",
+  "upperLabel": "Newest",
+  "_hint": "List at least 2 consoles from oldest → newest by release year. Max 20 items.",
+  "items": [
+    "Nintendo Entertainment System",
+    "Super Nintendo Entertainment System",
+    "PlayStation",
+    "Nintendo 64",
+    "PlayStation 2",
+    "GameCube",
+    "Xbox",
+    "Xbox 360",
+    "PlayStation 3",
+    "Wii",
+    "PlayStation 4",
+    "Xbox One",
+    "Wii U",
+    "Nintendo Switch",
+    "PlayStation 5",
+    "Xbox Series X/S"
+  ]
+}
