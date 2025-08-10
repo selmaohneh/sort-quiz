@@ -254,7 +254,7 @@
     els.tray.classList.toggle('two-col', remaining.length > TWO_COL_THRESHOLD);
     remaining.forEach((itemIdx) => { const chip = renderItemChip(itemIdx); chip.classList.add('compact'); els.tray.appendChild(chip); });
 
-    setHint('Drag an item into a numbered slot, or click an item then click a slot.');
+    setHint('Drag an item into a numbered slot (desktop), or click an item then click a slot (desktop, mobile).');
   }
 
   function renderSlot(slotIndex, numberLabel) {
