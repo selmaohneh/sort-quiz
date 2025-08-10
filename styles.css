@@ -351,7 +351,7 @@ body.win .timeline-card, body.lose .timeline-card { padding: 12px; }
 .carousel-card { background: var(--panel); border: 1px solid #242a54; border-radius: 18px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 0; }
 .carousel-header { color: var(--text); font-weight: 800; margin-bottom: 8px; font-family: 'League Spartan', sans-serif; font-size: 1.4rem; letter-spacing: 0.4px; }
 .carousel-description { color: var(--muted); margin: 0 0 16px 0; font-size: 0.95rem; }
-.carousel-viewport { overflow: hidden; padding: 0 16px; mask-image: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%); margin: 16px 0; }
+.carousel-viewport { overflow: hidden; padding: 4px 16px 0 16px; mask-image: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%); margin: 16px 0; }
 .carousel-track { display: flex; gap: 12px; will-change: transform; }
 .carousel-card-item { flex: 0 0 auto; background: linear-gradient(180deg, #1c214a, #141a3c); border: 1px solid #2b3270; border-radius: 14px; padding: 10px 14px; color: #e8ecff; min-width: 220px; text-align: center; cursor: pointer; transition: transform 120ms ease, box-shadow 200ms ease; }
 .carousel-card-item:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.25); }
