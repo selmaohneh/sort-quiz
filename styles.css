@@ -221,8 +221,8 @@ main { flex: 1; padding: 20px; display: grid; place-items: center; row-gap: 0; b
 .timeline.reveal-mode { gap: 6px; }
 .timeline.reveal-mode .slot { border: 0; outline: none; border-radius: 10px; background: transparent; }
 .timeline.reveal-mode .item-chip { padding: 4px 8px; font-size: 0.8rem; border: 1px solid #3b4386; border-radius: 10px; background: rgba(28, 33, 74, 0.6); box-shadow: none; }
-body.win .timeline.reveal-mode .item-chip { border-color: #2ea862; background: rgba(37, 155, 82, 0.12); }
-body.lose .timeline.reveal-mode .item-chip { border-color: #c84343; background: rgba(176, 46, 46, 0.12); }
+body.win .timeline.reveal-mode .item-chip { border-color: #2ea862; background: rgba(37, 155, 82, 0.15); }
+body.lose .timeline.reveal-mode .item-chip { border-color: #c84343; background: rgba(176, 46, 46, 0.15); }
 
 .slot {
   min-width: auto;
@@ -326,8 +326,8 @@ body.lose {
 /* Color the timeline card and inside column on finish */
 body.win .timeline-card { border-color: #259b52; box-shadow: 0 10px 30px rgba(37, 155, 82, 0.25); background: #12241a; }
 body.lose .timeline-card { border-color: #b02e2e; box-shadow: 0 10px 30px rgba(176, 46, 46, 0.25); background: #241212; }
-body.win .timeline { background: rgba(37, 155, 82, 0.12); border-radius: 12px; }
-body.lose .timeline { background: rgba(176, 46, 46, 0.12); border-radius: 12px; }
+body.win .timeline.reveal-mode { background: transparent; border-radius: 0; }
+body.lose .timeline.reveal-mode { background: transparent; border-radius: 0; }
 body.win .slot { background: rgba(37, 155, 82, 0.12); border-color: #2ea862; }
 body.lose .slot { background: rgba(176, 46, 46, 0.12); border-color: #c84343; }
 
