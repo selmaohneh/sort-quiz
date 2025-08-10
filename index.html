@@ -8,8 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;600;800&family=Nunito:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5845633849679297"
-    crossorigin="anonymous"></script>   
+   
   </head>
   <body>
     <div id="app">
@@ -33,16 +32,65 @@
       <main>
         <input id="fileInput" type="file" accept="application/json" hidden />
 
-        <section id="landing" class="panel">
+                <section id="landing" class="panel">
           <div class="hero">
-            <h2>Create a sort game for your next pub quiz. Who's the first to guess wrong?</h2>
-            <p class="lead">Bring your own data and play right away. Download the template, fill it with your items in order, then upload to start a new game.</p>
-            <div class="cta-row">
-              <button id="downloadTemplateBtn2" class="btn secondary">Download Template</button>
-              <label for="fileInput" class="btn primary">Upload and Start Quiz</label>
+            <div class="hero-icon">🎯</div>
+            <h2>Create a Sort Game for Your Next Pub Quiz</h2>
+            <p class="hero-subtitle">Who's the first to guess wrong?</p>
+            <p class="lead">Turn any ordered list into an exciting multiplayer guessing game. Perfect for pub quizzes, parties, or challenging your friends' knowledge!</p>
+            
+            <div class="how-to-play">
+              <h3>🎮 How to Play</h3>
+              <div class="play-steps">
+                <div class="play-step">
+                  <span class="step-number">1</span>
+                  <span>Multiple players take turns selecting an item</span>
+                </div>
+                <div class="play-step">
+                  <span class="step-number">2</span>
+                  <span>Try to place it in the correct position on the timeline</span>
+                </div>
+                <div class="play-step">
+                  <span class="step-number">3</span>
+                  <span>First person to make a mistake loses!</span>
+                </div>
+              </div>
             </div>
-            <details class="hint within-step">
-              <summary>Template example</summary>
+
+            <div class="create-section">
+              <h3>🛠️ Create Your Quiz</h3>
+              <div class="create-steps">
+                <div class="create-step">
+                  <div class="step-icon">📝</div>
+                  <div class="step-content">
+                    <strong>1. Download the template</strong>
+                    <p>Get our JSON template file to start building your quiz</p>
+                  </div>
+                </div>
+                <div class="create-step">
+                  <div class="step-icon">✏️</div>
+                  <div class="step-content">
+                    <strong>2. Fill in your data</strong>
+                    <p>Add your title, labels, and items in the correct order (2-20 items)</p>
+                  </div>
+                </div>
+                <div class="create-step">
+                  <div class="step-icon">🚀</div>
+                  <div class="step-content">
+                    <strong>3. Upload and play</strong>
+                    <p>Upload your file and start the game immediately</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cta-row">
+              <button id="downloadTemplateBtn2" class="btn primary large">📝 Download Template</button>
+              <label for="fileInput" class="btn secondary large">🚀 Upload Your Quiz</label>
+            </div>
+            
+            <details class="template-example">
+              <summary>📋 Template Example</summary>
               <pre class="code-sample">{
   "title": "Animal sizes",
   "lowerLabel": "Small",
@@ -58,18 +106,30 @@
     "Elephant"
   ]
 }</pre>
+              <p class="template-hint">💡 <strong>Pro tip:</strong> Great quiz ideas include movie earnings, historical events, sports rankings, country populations, or anything with a clear order!</p>
             </details>
           </div>
-                </section>
+        </section>
 
         <!-- Community quizzes -->
         <section class="panel" id="carouselPanel">
           <div class="carousel-card" id="carouselCard">
-            <div class="carousel-header">Community quizzes</div>
+            <div class="carousel-header">🌟 Try Community Quizzes</div>
+            <p class="carousel-description">Get inspired by quizzes created by other users. Quick games to test these concepts!</p>
             <div class="carousel-viewport">
               <div class="carousel-track" id="carouselTrack"></div>
             </div>
-            <div class="carousel-hint">Click a card to start</div>
+            <div class="carousel-footer">
+              <div class="carousel-hint">👆 Click a card to start playing</div>
+              <div class="community-info">
+                <p class="community-text">
+                  <strong>📤 Share Your Quiz:</strong> Found more quiz files or want to contribute? 
+                  <a href="https://github.com/selmaohneh/sort-quiz/tree/master/quizzes" target="_blank" rel="noopener">
+                    Visit our GitHub repository
+                  </a> to explore more quizzes and submit your own creations!
+                </p>
+              </div>
+            </div>
           </div>
         </section>
         
