@@ -1,0 +1,21 @@
+{
+  "title": "Animal Long Jump Distances",
+  "lowerLabel": "Short",
+  "upperLabel": "Long",
+  "_hint": "List at least 2 items from lowerLabel → upperLabel (Short → Long). Max 20 items.",
+  "items": [
+    "Flea",
+    "Wood mouse",
+    "Least weasel",
+    "Frog",
+    "Grasshopper",
+    "Jerboa",
+    "Fox",
+    "Lion",
+    "Tiger",
+    "Human (World Record)",
+    "Kangaroo",
+    "Red deer"
+  ]
+}
+
