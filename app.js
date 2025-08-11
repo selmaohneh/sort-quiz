@@ -136,10 +136,25 @@
       card.addEventListener('click', async () => {
         try {
           const embedded = window.EMBEDDED_QUIZZES && window.EMBEDDED_QUIZZES[q.path];
-          if (embedded) { const ok = startGameFromData(embedded); return; }
-          const res = await fetch(`./${q.path}`, { cache: 'no-store' });
-          const data = await res.json();
-          const ok = startGameFromData(data);
+          let data;
+          if (embedded) { 
+            data = embedded;
+            const ok = startGameFromData(embedded); 
+          } else {
+            const res = await fetch(`./${q.path}`, { cache: 'no-store' });
+            data = await res.json();
+            const ok = startGameFromData(data);
+          }
+          
+          // Track community quiz start event
+          if (typeof window.plausible === 'function') {
+            window.plausible('Community Quiz Started', {
+              props: { 
+                quiz_title: data.title || q.title,
+                items_count: data.items ? data.items.length : 0
+              }
+            });
+          }
         } catch (e) {
           showError('Failed to load quiz.');
         }
@@ -300,11 +315,67 @@
 
   function centerFinalTimeline() { cacheGameGrid(); if (els.gameGrid) els.gameGrid.classList.add('finished'); }
 
-  function revealCorrectOrder() { els.timeline.innerHTML = ''; els.timeline.classList.add('reveal-mode'); const total = state.orderedItems.length; const isWin = document.body.classList.contains('win'); const chipClass = isWin ? 'item-chip win' : 'item-chip lose'; for (let i = total - 1; i >= 0; i--) { const slot = $('div', { className: 'slot filled placed-reveal' }); const card = $('div', { className: chipClass, text: state.orderedItems[i] }); slot.appendChild(card); els.timeline.appendChild(slot); } els.tray.innerHTML = ''; setTimeout(() => setHint('Correct order revealed!'), 200); }
+  function revealCorrectOrder() { 
+    els.timeline.innerHTML = ''; 
+    els.timeline.classList.add('reveal-mode'); 
+    const total = state.orderedItems.length; 
+    const isWin = document.body.classList.contains('win'); 
+    const chipClass = isWin ? 'item-chip win' : 'item-chip lose'; 
+    for (let i = total - 1; i >= 0; i--) { 
+      const slot = $('div', { className: 'slot filled placed-reveal' }); 
+      const card = $('div', { className: chipClass, text: state.orderedItems[i] }); 
+      slot.appendChild(card); 
+      els.timeline.appendChild(slot); 
+    } 
+    els.tray.innerHTML = ''; 
+    setTimeout(() => setHint('Correct order revealed!'), 200); 
+    
+    // Track quiz completion event
+    if (typeof window.plausible === 'function') {
+      window.plausible('Quiz Finished', {
+        props: { 
+          result: isWin ? 'Success' : 'Error',
+          quiz_title: state.title,
+          items_count: total
+        }
+      });
+    }
+  }
 
-  els.fileInput.addEventListener('change', async (e) => { const file = e.target.files && e.target.files[0]; if (!file) return; try { const text = await readFile(file); const data = JSON.parse(text); const ok = startGameFromData(data); } catch (err) { console.error(err); showError('Failed to read file. Ensure it is valid.'); } finally { e.target.value = ''; } });
+  els.fileInput.addEventListener('change', async (e) => { 
+    const file = e.target.files && e.target.files[0]; 
+    if (!file) return; 
+    try { 
+      const text = await readFile(file); 
+      const data = JSON.parse(text); 
+      const ok = startGameFromData(data); 
+      
+      // Track quiz upload and start event
+      if (ok && typeof window.plausible === 'function') {
+        window.plausible('Quiz Uploaded', {
+          props: { 
+            quiz_title: data.title || 'Unknown',
+            items_count: data.items ? data.items.length : 0
+          }
+        });
+      }
+    } catch (err) { 
+      console.error(err); 
+      showError('Failed to read file. Ensure it is valid.'); 
+    } finally { 
+      e.target.value = ''; 
+    } 
+  });
 
-  function onDownloadTemplate() { const data = generateTemplate(); downloadText('my-animal-quiz.json', JSON.stringify(data, null, 2)); }
+  function onDownloadTemplate() { 
+    const data = generateTemplate(); 
+    downloadText('my-animal-quiz.json', JSON.stringify(data, null, 2)); 
+    
+    // Track template download event
+    if (typeof window.plausible === 'function') {
+      window.plausible('Template Downloaded');
+    }
+  }
   if (els.downloadTemplateBtn) els.downloadTemplateBtn.addEventListener('click', onDownloadTemplate);
   if (els.downloadTemplateBtn2) els.downloadTemplateBtn2.addEventListener('click', onDownloadTemplate);
 
