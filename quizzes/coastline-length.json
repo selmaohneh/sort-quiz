@@ -1,0 +1,24 @@
+{
+  "title": "Coastline Length",
+  "lowerLabel": "Short",
+  "upperLabel": "Long",
+  "_hint": "List at least 2 countries from short → long coastline. Maximum 20 countries.",
+  "items": [
+    "Canada",
+    "Russia",
+    "Brazil",
+    "Japan",
+    "Cuba",
+    "Italy",
+    "Ireland",
+    "North Korea",
+    "Portugal",
+    "Morocco",
+    "Poland",
+    "Ivory Coast",
+    "Israel",
+    "Iraq",
+    "Monaco",
+    "Hungary"
+  ]
+}
