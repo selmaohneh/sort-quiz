@@ -1,5 +1,5 @@
 [
   { "path": "quizzes/stars-age-of-death.json", "title": "Age at Death of Famous Musicians" },
-  { "path": "quizzes/gaming-consoles-releases.json", "title": "Major Gaming Consoles Ordered by Release Year" },
+  { "path": "quizzes/gaming-consoles-releases.json", "title": "Release Years of Major Gaming Consoles" },
  { "path": "quizzes/coastline-length.json", "title": "Lenght of Coastline" }
 ] 
