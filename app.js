@@ -60,7 +60,8 @@
   const QUIZ_DATA_GETTERS = {
     'stars-age-of-death': () => window.QUIZ_DATA_STARS_AGE_OF_DEATH,
     'gaming-consoles-releases': () => window.QUIZ_DATA_GAMING_CONSOLES_RELEASES,
-    'coastline-length': () => window.QUIZ_DATA_COASTLINE_LENGTH
+    'coastline-length': () => window.QUIZ_DATA_COASTLINE_LENGTH,
+    'us-presidents': () => window.QUIZ_DATA_US_PRESIDENTS
   };
 
   // --- Audio ---

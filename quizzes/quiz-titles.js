@@ -14,5 +14,10 @@ window.QUIZ_TITLES = [
     id: "coastline-length", 
     title: "Coastline Length",
     scriptPath: "quizzes/coastline-length.js"
+  },
+  { 
+    id: "us-presidents", 
+    title: "US Presidents from Current to First",
+    scriptPath: "quizzes/us-presidents.js"
   }
 ]; 
