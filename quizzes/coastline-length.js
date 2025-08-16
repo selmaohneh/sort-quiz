@@ -1,9 +1,8 @@
 // Coastline Length Quiz Data
 window.QUIZ_DATA_COASTLINE_LENGTH = {
   "title": "Coastline Length",
-  "lowerLabel": "Short",
   "upperLabel": "Long",
-  "_hint": "List at least 2 countries from short → long coastline. Maximum 20 countries.",
+  "lowerLabel": "Short",
   "items": [
     "Canada",
     "Russia",

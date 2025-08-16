@@ -1,14 +1,14 @@
 {
   "title": "Animal sizes",
-  "lowerLabel": "Small",
-  "upperLabel": "Big",
+  "upperLabel": "Small",
+  "lowerLabel": "Big",
   "items": [
-    "Ant",
-    "Spider",
-    "Mouse",
-    "Raven",
-    "Cat",
+    "Elephant",
     "Dog",
-    "Elephant"
+    "Cat",
+    "Raven",
+    "Mouse",
+    "Spider",
+    "Ant"
   ]
 } 

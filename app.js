@@ -18,6 +18,8 @@
     closeErrorBtn: document.getElementById('closeErrorBtn'),
     carouselTrack: document.getElementById('carouselTrack'),
     carouselPanel: document.getElementById('carouselPanel'),
+    // Background carousel elements
+    backgroundCarousel: document.getElementById('backgroundCarousel'),
   };
 
   const MAX_ITEMS = 20;
@@ -123,8 +125,8 @@
     if (els.gameGrid) els.gameGrid.classList.remove('finished');
   }
 
-  function toLanding() { state.gameOver = false; els.game.classList.add('hidden'); els.landing.classList.remove('hidden'); if (els.carouselPanel) els.carouselPanel.classList.remove('hidden'); }
-  function toGame() { els.landing.classList.add('hidden'); els.game.classList.remove('hidden'); if (els.carouselPanel) els.carouselPanel.classList.add('hidden'); }
+  function toLanding() { state.gameOver = false; els.game.classList.add('hidden'); els.landing.classList.remove('hidden'); if (els.carouselPanel) els.carouselPanel.classList.remove('hidden'); if (els.backgroundCarousel) els.backgroundCarousel.style.display = 'block'; }
+  function toGame() { els.landing.classList.add('hidden'); els.game.classList.remove('hidden'); if (els.carouselPanel) els.carouselPanel.classList.add('hidden'); if (els.backgroundCarousel) els.backgroundCarousel.style.display = 'none'; }
 
   async function fetchQuizList() {
     // Load quiz titles for carousel
@@ -217,6 +219,91 @@
     requestAnimationFrame(animateCarousel);
   }
 
+  // Background Multi-Row Carousel Functions
+  async function buildBackgroundCarousel() {
+    if (!els.backgroundCarousel) return;
+    
+    const list = await fetchQuizList();
+    if (!list.length) {
+      // Hide carousel if no quiz data
+      els.backgroundCarousel.style.display = 'none';
+      return;
+    }
+
+    // Create expanded list with duplicates to fill space
+    const expandedList = [];
+    const targetCount = 25; // More items for background effect
+    
+    // Fill the array by repeating the quiz titles
+    while (expandedList.length < targetCount) {
+      expandedList.push(...list);
+    }
+    
+    // Shuffle for variety
+    shuffle(expandedList);
+
+    // Create carousel item (with click functionality)
+    const makeBackgroundCarouselItem = (quiz) => {
+      const item = $('div', { className: 'carousel-quiz-item', text: quiz.title });
+      item.addEventListener('click', async () => {
+        try {
+          let data;
+          
+          // Check if quiz data is already loaded
+          const getter = QUIZ_DATA_GETTERS[quiz.id];
+          if (getter && getter()) {
+            data = getter();
+          } else {
+            // Dynamically load the quiz script
+            await loadScript(quiz.scriptPath);
+            const loadedGetter = QUIZ_DATA_GETTERS[quiz.id];
+            if (loadedGetter && loadedGetter()) {
+              data = loadedGetter();
+            } else {
+              throw new Error('Quiz data not found after loading script');
+            }
+          }
+          
+          const ok = startGameFromData(data);
+          
+          // Track community quiz start event
+          if (typeof window.plausible === 'function') {
+            window.plausible('Community Quiz Started', {
+              props: { 
+                quiz_title: data.title || quiz.title,
+                items_count: data.items ? data.items.length : 0
+              }
+            });
+          }
+        } catch (e) {
+          console.error('Failed to load quiz:', e);
+          showError('Failed to load quiz.');
+        }
+      });
+      return item;
+    };
+
+    // Populate row
+    const populateRow = (rowElement, startIndex) => {
+      rowElement.innerHTML = '';
+      // Create multiple copies for seamless scrolling
+      for (let copy = 0; copy < 3; copy++) {
+        for (let i = 0; i < 8; i++) { // 8 items per row copy
+          const index = (startIndex + i) % expandedList.length;
+          rowElement.appendChild(makeBackgroundCarouselItem(expandedList[index]));
+        }
+      }
+    };
+
+    // Populate all background rows with different starting points
+    for (let i = 1; i <= 20; i++) {
+      const rowElement = document.getElementById(`bgRow${i}`);
+      if (rowElement) {
+        populateRow(rowElement, (i * 3) % expandedList.length);
+      }
+    }
+  }
+
   function readFile(file) {
     return new Promise((resolve, reject) => {
       const fr = new FileReader();
@@ -239,10 +326,10 @@
   function generateTemplate() {
     return {
       title: 'Animal sizes',
-      lowerLabel: 'Small',
       upperLabel: 'Big',
-      _hint: 'List at least 2 items from lowerLabel → upperLabel (Small → Big). Max 20 items.',
-      items: ['Ant','Spider','Mouse','Raven','Cat','Dog','Elephant']
+      lowerLabel: 'Small',
+      _hint: 'List at least 2 items from upperLabel → lowerLabel (Big → Small). Max 20 items.',
+      items: ['Elephant','Dog','Cat','Raven','Mouse','Spider','Ant']
     };
   }
 
@@ -321,7 +408,7 @@
   }
 
   function clearSelections() { state.selectedItemIndex = null; document.querySelectorAll('.item-chip.selected').forEach((n) => n.classList.remove('selected')); }
-  function isCorrectPlacement(itemIndex, slotIndex) { const leftNeighbor = state.placed[slotIndex - 1]; const rightNeighbor = state.placed[slotIndex]; return (leftNeighbor === undefined || leftNeighbor < itemIndex) && (rightNeighbor === undefined || itemIndex < rightNeighbor); }
+  function isCorrectPlacement(itemIndex, slotIndex) { const leftNeighbor = state.placed[slotIndex - 1]; const rightNeighbor = state.placed[slotIndex]; return (leftNeighbor === undefined || leftNeighbor > itemIndex) && (rightNeighbor === undefined || itemIndex > rightNeighbor); }
 
   function tryPlaceItemAtSlot(itemIndex, slotIndex) {
     if (state.gameOver) return;
@@ -347,7 +434,7 @@
     const total = state.orderedItems.length; 
     const isWin = document.body.classList.contains('win'); 
     const chipClass = isWin ? 'item-chip win' : 'item-chip lose'; 
-    for (let i = total - 1; i >= 0; i--) { 
+    for (let i = 0; i < total; i++) { 
       const slot = $('div', { className: 'slot filled placed-reveal' }); 
       const card = $('div', { className: chipClass, text: state.orderedItems[i] }); 
       slot.appendChild(card); 
@@ -410,6 +497,10 @@
   document.addEventListener('keydown', (e) => { if (state.selectedItemIndex == null) return; const num = Number(e.key); if (!Number.isNaN(num) && num >= 1 && num <= state.slots.length) tryPlaceItemAtSlot(state.selectedItemIndex, num - 1); });
 
   // Init
-  buildCarousel();
-  toLanding();
+  async function initializeApp() {
+    await buildCarousel();
+    await buildBackgroundCarousel();
+    toLanding();
+  }
+  initializeApp();
 })(); 

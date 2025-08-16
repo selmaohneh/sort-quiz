@@ -37,34 +37,36 @@
       <main>
         <input id="fileInput" type="file" accept="application/json" hidden />
 
-                <section id="landing" class="panel">
+        <section id="landing" class="panel">
+          <!-- Background Multi-row Carousel -->
+          <div class="background-carousel" id="backgroundCarousel">
+            <div class="carousel-row slide-right" id="bgRow1"></div>
+            <div class="carousel-row slide-left" id="bgRow2"></div>
+            <div class="carousel-row slide-right" id="bgRow3"></div>
+            <div class="carousel-row slide-left" id="bgRow4"></div>
+            <div class="carousel-row slide-right" id="bgRow5"></div>
+            <div class="carousel-row slide-left" id="bgRow6"></div>
+            <div class="carousel-row slide-right" id="bgRow7"></div>
+            <div class="carousel-row slide-left" id="bgRow8"></div>
+            <div class="carousel-row slide-right" id="bgRow9"></div>
+            <div class="carousel-row slide-left" id="bgRow10"></div>
+            <div class="carousel-row slide-right" id="bgRow11"></div>
+            <div class="carousel-row slide-left" id="bgRow12"></div>
+            <div class="carousel-row slide-right" id="bgRow13"></div>
+            <div class="carousel-row slide-left" id="bgRow14"></div>
+            <div class="carousel-row slide-right" id="bgRow15"></div>
+            <div class="carousel-row slide-left" id="bgRow16"></div>
+            <div class="carousel-row slide-right" id="bgRow17"></div>
+            <div class="carousel-row slide-left" id="bgRow18"></div>
+            <div class="carousel-row slide-right" id="bgRow19"></div>
+            <div class="carousel-row slide-left" id="bgRow20"></div>
+          </div>
+
           <div class="hero">
             <div class="hero-icon">🎯</div>
             <h2>Create a Sort Game for Your Next Pub Quiz</h2>
             <p class="hero-subtitle">Who's the first to guess wrong?</p>
-            <p class="lead">Turn any ordered list into an exciting multiplayer guessing game. Perfect for pub quizzes, parties, or challenging your friends' knowledge!</p>
             
-            <div class="how-to-play">
-              <h3>🎮 How to Play</h3>
-              <div class="play-steps">
-                <div class="play-step">
-                  <span class="step-number">1</span>
-                  <span>Multiple players take turns selecting an item</span>
-                </div>
-                <div class="play-step">
-                  <span class="step-number">2</span>
-                  <span>Try to place it in the correct position on the timeline</span>
-                </div>
-                <div class="play-step">
-                  <span class="step-number">3</span>
-                  <span>First person to make a mistake loses!</span>
-                </div>
-              </div>
-              <div class="play-hint">
-                💡 <strong>Best Experience:</strong> Plays best on desktop in full screen for optimal visibility and interaction.
-              </div>
-            </div>
-
             <div class="create-section">
               <h3>🛠️ Create Your Quiz</h3>
               <div class="create-steps">
@@ -79,7 +81,7 @@
                   <div class="step-icon">✏️</div>
                   <div class="step-content">
                     <strong>2. Fill in your data</strong>
-                    <p>Add your title, labels, and items in the correct order (2-20 items)</p>
+                    <p>Add your title, labels, and items from highest to lowest value (2-20 items)</p>
                   </div>
                 </div>
                 <div class="create-step">
@@ -89,6 +91,13 @@
                     <p>Upload your file and start the game immediately</p>
                   </div>
                 </div>
+                <div class="create-step">
+                  <div class="step-icon">📤</div>
+                  <div class="step-content">
+                    <strong>4. Share on GitHub</strong>
+                    <p>Submit your quiz to our <a href="https://github.com/selmaohneh/sort-quiz/tree/master/quizzes" target="_blank" rel="noopener">GitHub repository</a> for others to enjoy</p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -96,50 +105,10 @@
               <button id="downloadTemplateBtn2" class="btn primary large">📝 Download Template</button>
               <label for="fileInput" class="btn secondary large">🚀 Upload Your Quiz</label>
             </div>
-            
-            <details class="template-example">
-              <summary>📋 Template Example</summary>
-              <pre class="code-sample">{
-  "title": "Animal sizes",
-  "lowerLabel": "Small",
-  "upperLabel": "Big",
-  "_hint": "List at least 2 items from lowerLabel → upperLabel (Small → Big). Max 20 items.",
-  "items": [
-    "Ant",
-    "Spider",
-    "Mouse",
-    "Raven",
-    "Cat",
-    "Dog",
-    "Elephant"
-  ]
-}</pre>
-              <p class="template-hint">💡 <strong>Pro tip:</strong> Great quiz ideas include movie earnings, historical events, sports rankings, country populations, or anything with a clear order!</p>
-            </details>
           </div>
         </section>
 
-        <!-- Community quizzes -->
-        <section class="panel" id="carouselPanel">
-          <div class="carousel-card" id="carouselCard">
-            <div class="carousel-header">🌟 Try Community Quizzes</div>
-            <p class="carousel-description">Get inspired by quizzes created by other users. Quick games to test these concepts!</p>
-            <div class="carousel-viewport">
-              <div class="carousel-track" id="carouselTrack"></div>
-            </div>
-            <div class="carousel-footer">
-              <div class="carousel-hint">👆 Click a card to start playing</div>
-              <div class="community-info">
-                <p class="community-text">
-                  <strong>📤 Share Your Quiz:</strong> Found more quiz files or want to contribute? 
-                  <a href="https://github.com/selmaohneh/sort-quiz/tree/master/quizzes" target="_blank" rel="noopener">
-                    Visit our GitHub repository
-                  </a> to explore more quizzes and submit your own creations!
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+
         
         <section id="game" class="panel hidden">
           <div class="game-header center">
