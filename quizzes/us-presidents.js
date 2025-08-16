@@ -4,6 +4,7 @@ window.QUIZ_DATA_US_PRESIDENTS = {
     "upperLabel": "Newest",
     "lowerLabel": "Oldest",
     "items": [
+        "Donald Trump",
         "Joe Biden",
         "Donald Trump",
         "Barack Obama", 
