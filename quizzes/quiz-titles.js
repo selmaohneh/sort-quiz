@@ -34,5 +34,10 @@ window.QUIZ_TITLES = [
     id: "active-military-personnel", 
     title: "Countries by Active Military Personnel (2025)",
     scriptPath: "quizzes/active-military-personnel.js"
+  },
+  { 
+    id: "best-selling-albums", 
+    title: "Best-Selling Albums by Millions Sold",
+    scriptPath: "quizzes/best-selling-albums.js"
   }
 ]; 
