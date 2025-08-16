@@ -328,7 +328,7 @@
       title: 'Animal sizes',
       upperLabel: 'Big',
       lowerLabel: 'Small',
-      _hint: 'List at least 2 items from upperLabel → lowerLabel (Big → Small). Max 20 items.',
+      _hint: 'List at least 2 items from upperLabel → lowerLabel. If more than 20 items are provided, 20 random items will be selected.',
       items: ['Elephant','Dog','Cat','Raven','Mouse','Spider','Ant']
     };
   }
