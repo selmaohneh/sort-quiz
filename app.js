@@ -43,6 +43,24 @@
     }
   };
 
+  // --- Utility Functions ---
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+      document.head.appendChild(script);
+    });
+  }
+
+  // Quiz data getter mapping
+  const QUIZ_DATA_GETTERS = {
+    'stars-age-of-death': () => window.QUIZ_DATA_STARS_AGE_OF_DEATH,
+    'gaming-consoles-releases': () => window.QUIZ_DATA_GAMING_CONSOLES_RELEASES,
+    'coastline-length': () => window.QUIZ_DATA_COASTLINE_LENGTH
+  };
+
   // --- Audio ---
   let audioCtx = null;
   let masterGain = null;
@@ -109,15 +127,14 @@
   function toGame() { els.landing.classList.add('hidden'); els.game.classList.remove('hidden'); if (els.carouselPanel) els.carouselPanel.classList.add('hidden'); }
 
   async function fetchQuizList() {
-    // Prefer embedded list when running from file://
-    if (Array.isArray(window.EMBEDDED_MANIFEST) && window.EMBEDDED_MANIFEST.length) {
-      return window.EMBEDDED_MANIFEST.slice();
+    // Load quiz titles for carousel
+    if (Array.isArray(window.QUIZ_TITLES) && window.QUIZ_TITLES.length) {
+      return window.QUIZ_TITLES.slice();
     }
     try {
-      const res = await fetch('./quizzes/manifest.json', { cache: 'no-store' });
-      if (!res.ok) return [];
-      const list = await res.json();
-      return Array.isArray(list) ? list : [];
+      // Try to load the quiz titles script
+      await loadScript('./quizzes/quiz-titles.js');
+      return Array.isArray(window.QUIZ_TITLES) ? window.QUIZ_TITLES.slice() : [];
     } catch { return []; }
   }
 
@@ -135,16 +152,24 @@
       const card = $('div', { className: 'carousel-card-item', text: q.title });
       card.addEventListener('click', async () => {
         try {
-          const embedded = window.EMBEDDED_QUIZZES && window.EMBEDDED_QUIZZES[q.path];
           let data;
-          if (embedded) { 
-            data = embedded;
-            const ok = startGameFromData(embedded); 
+          
+          // Check if quiz data is already loaded
+          const getter = QUIZ_DATA_GETTERS[q.id];
+          if (getter && getter()) {
+            data = getter();
           } else {
-            const res = await fetch(`./${q.path}`, { cache: 'no-store' });
-            data = await res.json();
-            const ok = startGameFromData(data);
+            // Dynamically load the quiz script
+            await loadScript(q.scriptPath);
+            const loadedGetter = QUIZ_DATA_GETTERS[q.id];
+            if (loadedGetter && loadedGetter()) {
+              data = loadedGetter();
+            } else {
+              throw new Error('Quiz data not found after loading script');
+            }
           }
+          
+          const ok = startGameFromData(data);
           
           // Track community quiz start event
           if (typeof window.plausible === 'function') {
@@ -156,6 +181,7 @@
             });
           }
         } catch (e) {
+          console.error('Failed to load quiz:', e);
           showError('Failed to load quiz.');
         }
       });

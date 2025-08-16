@@ -1,4 +1,5 @@
-{
+// Major Gaming Consoles Ordered by Release Year Quiz Data
+window.QUIZ_DATA_GAMING_CONSOLES_RELEASES = {
   "title": "Major Gaming Consoles Ordered by Release Year",
   "lowerLabel": "Oldest",
   "upperLabel": "Newest",
@@ -21,4 +22,4 @@
     "PlayStation 5",
     "Xbox Series X/S"
   ]
-}
+}; 

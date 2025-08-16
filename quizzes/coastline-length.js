@@ -1,4 +1,5 @@
-{
+// Coastline Length Quiz Data
+window.QUIZ_DATA_COASTLINE_LENGTH = {
   "title": "Coastline Length",
   "lowerLabel": "Short",
   "upperLabel": "Long",
@@ -21,4 +22,4 @@
     "Monaco",
     "Hungary"
   ]
-}
+}; 

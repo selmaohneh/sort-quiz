@@ -178,17 +178,7 @@
         </div>
       </dialog>
 
-      <script>
-        // Embedded manifest and quizzes to allow offline (file://) carousel
-        window.EMBEDDED_MANIFEST = [
-          { "path": "quizzes/stars-age-of-death.json", "title": "Age at Death of Famous Musicians" },
-          { "path": "quizzes/gaming-consoles-releases.json", "title": "Major Gaming Consoles Ordered by Release Year" }
-        ];
-        window.EMBEDDED_QUIZZES = {
-          "quizzes/stars-age-of-death.json": {"title":"Age at Death of Famous Musicians","lowerLabel":"Young","upperLabel":"Old","_hint":"List at least 2 items from lowerLabel → upperLabel (Young → Old). Max 20 items.","items":["Kurt Cobain","John Lennon","Chester Bennington","Elvis Presley","Whitney Houston","Michael Jackson","Prince","Lemmy Kilmister","Ozzy Osbourne","Tina Turner"]},
-          "quizzes/gaming-consoles-releases.json": {"title":"Major Gaming Consoles Ordered by Release Year","lowerLabel":"Oldest","upperLabel":"Newest","_hint":"List at least 2 consoles from oldest → newest by release year. Max 20 items.","items":["Nintendo Entertainment System","Super Nintendo Entertainment System","PlayStation","Nintendo 64","PlayStation 2","GameCube","Xbox","Xbox 360","PlayStation 3","Wii","PlayStation 4","Xbox One","Wii U","Nintendo Switch","PlayStation 5","Xbox Series X/S"]}
-        };
-      </script>
+      <script src="./quizzes/quiz-titles.js"></script>
       <script src="./app.js"></script>
     </div>
   </body>
