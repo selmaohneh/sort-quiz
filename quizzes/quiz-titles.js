@@ -29,5 +29,10 @@ window.QUIZ_TITLES = [
     id: "most-visited-cities", 
     title: "Most Visited Cities by International Visitors (2024)",
     scriptPath: "quizzes/most-visited-cities.js"
+  },
+  { 
+    id: "active-military-personnel", 
+    title: "Countries by Active Military Personnel (2025)",
+    scriptPath: "quizzes/active-military-personnel.js"
   }
 ]; 
