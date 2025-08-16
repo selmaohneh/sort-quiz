@@ -19,5 +19,10 @@ window.QUIZ_TITLES = [
     id: "us-presidents", 
     title: "US Presidents from Current to First",
     scriptPath: "quizzes/us-presidents.js"
+  },
+  { 
+    id: "michelin-restaurants", 
+    title: "Michelin 3-Star Restaurants by Country",
+    scriptPath: "quizzes/michelin-restaurants.js"
   }
 ]; 
