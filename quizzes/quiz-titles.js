@@ -24,5 +24,10 @@ window.QUIZ_TITLES = [
     id: "michelin-restaurants", 
     title: "Michelin 3-Star Restaurants by Country",
     scriptPath: "quizzes/michelin-restaurants.js"
+  },
+  { 
+    id: "most-visited-cities", 
+    title: "Most Visited Cities by International Visitors (2024)",
+    scriptPath: "quizzes/most-visited-cities.js"
   }
 ]; 
