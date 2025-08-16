@@ -198,7 +198,7 @@ main { flex: 1; padding: 20px; display: grid; place-items: center; row-gap: 0; b
   gap: 16px;
 }
 .left-column, .right-column { display: grid; align-content: start; gap: 16px; }
-.left-column { overflow: hidden; }
+.left-column { overflow: visible; }
 
 /* Center timeline when finished */
 .game-grid.finished {
@@ -228,7 +228,7 @@ main { flex: 1; padding: 20px; display: grid; place-items: center; row-gap: 0; b
   grid-auto-rows: 1fr;
   gap: 8px;
   align-items: stretch;
-  overflow: hidden;
+  overflow: visible;
   padding-bottom: 8px;
 }
 /* Denser layout on final reveal so many items fit cleanly */
@@ -281,7 +281,9 @@ body.lose .timeline.reveal-mode .item-chip { border-color: #c84343; background: 
 }
 .item-chip.compact { padding: 6px 8px; font-size: 0.85rem; border-radius: 10px; }
 .item-chip:active { cursor: grabbing; transform: scale(0.98); }
-.item-chip.selected { outline: 2px solid var(--accent); }
+.item-chip.selected { 
+  box-shadow: var(--shadow), 0 0 0 2px var(--accent); 
+}
 .item-chip.win { border-color: #2ea862; background: linear-gradient(180deg, #1f3a2b, #15281e); }
 .item-chip.lose { border-color: #c84343; background: linear-gradient(180deg, #3a1f1f, #281515); }
 
@@ -293,7 +295,8 @@ body.lose .timeline.reveal-mode .item-chip { border-color: #c84343; background: 
   padding: 16px;
   box-shadow: var(--shadow);
   height: var(--panel-height);
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: visible;
   display: grid;
   grid-template-rows: auto 1fr auto;
 }
@@ -306,7 +309,7 @@ body.lose .timeline.reveal-mode .item-chip { border-color: #c84343; background: 
   align-items: stretch;
   align-content: stretch;
   gap: 6px;
-  overflow: hidden;
+  overflow: visible;
 }
 .tray.two-col { grid-template-columns: 1fr 1fr; column-gap: 8px; row-gap: 6px; }
 .tray.two-col .item-chip { padding: 5px 8px; font-size: 0.8rem; border-radius: 10px; }
